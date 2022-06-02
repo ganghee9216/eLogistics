@@ -1,4 +1,4 @@
-package com.ganghee.elogistics.domain.item;
+package com.ganghee.elogistics.domain.category;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,18 +11,14 @@ import javax.persistence.Id;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Item {
+public class Category {
 
     @Id
     @GeneratedValue
-    @Column(name="item_id")
+    @Column(name = "category_id")
     private Long id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private int price;
 
-    private int quantity;
 }
