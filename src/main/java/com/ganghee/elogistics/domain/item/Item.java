@@ -1,12 +1,14 @@
 package com.ganghee.elogistics.domain.item;
 
+import com.ganghee.elogistics.domain.categoryItem.CategoryItem;
+import com.ganghee.elogistics.domain.member.Member;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -25,4 +27,19 @@ public class Item {
     private int price;
 
     private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member producer;
+
+    @OneToMany(mappedBy = "item")
+    private List<CategoryItem> categories = new ArrayList<>();
+
+    @Builder
+    public Item(String name, int price, int quantity, Member producer){
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.producer = producer;
+    }
 }

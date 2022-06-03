@@ -1,4 +1,4 @@
-package com.ganghee.elogistics.domain.user;
+package com.ganghee.elogistics.domain.member;
 
 import com.ganghee.elogistics.domain.address.Address;
 import lombok.Builder;
@@ -11,11 +11,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 
-public class User {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
+    @Column(name="member_id")
     private Long id;
 
     @Column(nullable = false)
@@ -34,7 +34,7 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String name, String password, String email, Address address, Role role){
+    public Member(String name, String password, String email, Address address, Role role){
         this.name = name;
         this.email = email;
         this.password = password;
