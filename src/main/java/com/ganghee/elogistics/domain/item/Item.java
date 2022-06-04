@@ -42,4 +42,10 @@ public class Item {
         this.quantity = quantity;
         this.producer = producer;
     }
+
+    public void updateItem(String name, int price, int Quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = Quantity;
+    }
 }
