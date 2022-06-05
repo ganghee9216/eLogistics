@@ -2,6 +2,7 @@ package com.ganghee.elogistics.domain.orderItem;
 
 import com.ganghee.elogistics.domain.item.Item;
 import com.ganghee.elogistics.domain.order.Order;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,9 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    @Builder
+    public OrderItem(Order order, Item item){
+        this.order = order;
+        this.item = item;
+    }
 }
