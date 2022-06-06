@@ -1,5 +1,6 @@
 package com.ganghee.elogistics.domain.orderItem;
 
+import com.ganghee.elogistics.domain.BaseTimeEntity;
 import com.ganghee.elogistics.domain.item.Item;
 import com.ganghee.elogistics.domain.order.Order;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class OrderItem {
+public class OrderItem extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
@@ -26,9 +27,14 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    private int count;
+
     @Builder
-    public OrderItem(Order order, Item item){
+    public OrderItem(Order order, Item item, int count){
         this.order = order;
         this.item = item;
+        this.count = count;
     }
+
+    public void cancel() { item.addQuantity(count); }
 }

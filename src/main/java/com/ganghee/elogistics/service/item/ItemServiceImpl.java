@@ -41,6 +41,7 @@ public class ItemServiceImpl implements ItemService {
                 .producer(producer)
                 .build();
 
+        //itemDto.getCategories()값이 null일 때 까지 CategoryItem category에 값을 넣어줌
         for(CategoryItem category : itemDto.getCategories()){
             item.getCategories().add(category);
         }
@@ -65,7 +66,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional(readOnly = true)
     public List<ItemListResponseDto> itemList(){
-        return itemRepository.findAllDesc().stream()
+        return itemRepository.findAllItemDesc().stream()
                 .map(ItemListResponseDto::new)
                 .collect(Collectors.toList());
     }

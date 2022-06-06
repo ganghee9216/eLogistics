@@ -8,7 +8,9 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class ItemListResponseDto {private Long id;
+public class ItemListResponseDto {
+
+    private Long id;
 
     private String name;
 

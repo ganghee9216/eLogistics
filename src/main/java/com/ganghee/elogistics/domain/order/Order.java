@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 //order는 예약자이기 때문에 orders로 이름 변경
-@Table(name="orders")
+@Table(name="Orders")
 public class Order extends BaseTimeEntity {
 
     @Id
@@ -34,11 +34,18 @@ public class Order extends BaseTimeEntity {
     private OrderStatus status;
 
     @Builder
-    public Order(Member member){
+    public Order(Member member, List<OrderItem> orderItems){
         this.member = member;
+        this.orderItems = orderItems;
         changeStatus(OrderStatus.BEFORE_GET);
     }
 
-    public void changeStatus(OrderStatus status){this.status = status;}
+    public void changeStatus(OrderStatus status){ this.status = status; }
+
+    public void cancel(){
+        for(OrderItem orderItem: orderItems){
+            orderItem.cancel();
+        }
+    }
 
 }

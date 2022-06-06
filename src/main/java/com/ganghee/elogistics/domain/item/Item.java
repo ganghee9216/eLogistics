@@ -48,4 +48,11 @@ public class Item {
         this.price = price;
         this.quantity = Quantity;
     }
+
+    public void addQuantity(int count){ quantity += count; };
+
+    public void removeQuantity(int count){
+        int restQuantity = this.quantity - count;
+        this.quantity = restQuantity;
+    }
 }
