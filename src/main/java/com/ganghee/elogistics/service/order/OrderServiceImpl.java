@@ -37,27 +37,27 @@ public class OrderServiceImpl implements OrderService {
 
         for(OrderSaveDto sDto : saveDto){
 
-            Order order = Order.builder().member(member).build();
-
-            List<OrderItem> orderItems = new ArrayList<>();
-
-            HashMap<Long, Integer> items = sDto.getItems();
-
-            if(items != null){
-                for(Long itemId : items.keySet()){
-                    Item item = itemRepository.findById(itemId)
-                            .orElseThrow(() -> new IllegalArgumentException());
-                    int count = items.get(itemId);
-                    item.removeQuantity(count);
-
-                    orderItems.add(OrderItem.builder()
-                            .order(order).item(item)
-                            .count(count).build());
-                }
-            }
-            order = Order.builder().member(member).orderItems(orderItems).build();
+            Order order = Order.builder().member(member).orderItems(
+                    makeOrderItems(member, sDto)).build();
 
             orderRepository.save(order);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateOrder(Long orderId, List<OrderSaveDto> saveDto){
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        Member member = memberRepository.findById(saveDto.get(0).getMemberId())
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        for(OrderSaveDto sDto : saveDto){
+
+            order = Order.builder().member(member).orderItems(
+                    makeOrderItems(member, sDto)).build();
         }
     }
 
@@ -76,5 +76,27 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new IllegalArgumentException());
         order.cancel();
         orderRepository.delete(order);
+    }
+
+    @Transactional
+    public List<OrderItem> makeOrderItems(Member member, OrderSaveDto sDto){
+
+        List<OrderItem> orderItems = new ArrayList<>();
+
+        HashMap<Long, Integer> items = sDto.getItems();
+
+        if(items != null){
+            for(Long itemId : items.keySet()){
+                Item item = itemRepository.findById(itemId)
+                        .orElseThrow(() -> new IllegalArgumentException());
+                int count = items.get(itemId);
+                item.removeQuantity(count);
+
+                orderItems.add(OrderItem.builder()
+                        .order(Order.builder().member(member).build())
+                        .item(item).count(count).build());
+            }
+        }
+        return orderItems;
     }
 }

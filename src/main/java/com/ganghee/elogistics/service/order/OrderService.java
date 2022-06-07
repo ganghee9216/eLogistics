@@ -10,5 +10,7 @@ public interface OrderService {
 
     List<OrderResponseDto> orderList();
 
+    void updateOrder(Long orderId, List<OrderSaveDto> saveDto);
+
     void cancelOrder(Long orderId);
 }

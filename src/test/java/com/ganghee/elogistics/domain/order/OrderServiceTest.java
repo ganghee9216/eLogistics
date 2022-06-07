@@ -8,7 +8,6 @@ import com.ganghee.elogistics.domain.member.MemberRepository;
 import com.ganghee.elogistics.domain.member.Role;
 import com.ganghee.elogistics.dto.order.OrderSaveDto;
 import com.ganghee.elogistics.service.order.OrderServiceImpl;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +36,6 @@ public class OrderServiceTest {
 
     @Autowired
     OrderServiceImpl orderService;
-
-    @AfterEach
-    public void cleanUp(){
-        memberRepository.deleteAll();
-        itemRepository.deleteAll();
-        orderRepository.deleteAll();
-    }
 
     @Test
     @Transactional
@@ -89,8 +81,6 @@ public class OrderServiceTest {
 
         List<Order> order = orderRepository.findAll();
 
-        List<String> itemNameList = itemRepository.findItemName();
-
-        assertThat(itemNameList.get(0)).isEqualTo(itemNames[0]);
+        assertThat(order.get(0).getOrderItems().get(0).getItem().getName()).isEqualTo(itemNames[0]);
     }
 }
