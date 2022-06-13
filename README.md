@@ -36,4 +36,9 @@
 ## 테이블 설계
 **공급업체**
 
-![image](https://user-images.githubusercontent.com/105147525/173012244-adfb1262-97de-44f5-8bc9-cb6181f73bb4.png)
+![image](https://user-images.githubusercontent.com/105147525/173352720-24f7d63e-c2c9-4755-9267-f7bcde4471a4.png)
+
+**소매업체**
+
+![image](https://user-images.githubusercontent.com/105147525/173355768-90906779-1c1d-4e07-8f9f-f1c16e4e45e4.png)
+
