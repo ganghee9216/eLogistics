@@ -16,7 +16,7 @@ import java.util.List;
 public class Item {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="item_id")
     private Long id;
 
@@ -28,7 +28,7 @@ public class Item {
 
     private int quantity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member producer;
 

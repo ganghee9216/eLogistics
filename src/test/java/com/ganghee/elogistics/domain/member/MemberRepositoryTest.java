@@ -28,7 +28,7 @@ public class MemberRepositoryTest {
     public void testMember(){
         String name = "홍길동";
         String email = "example@naver.com";
-        Address address = Address.builder().city("서울").detail_addr("강남구").build();
+        Address address = Address.builder().city("서울").street("강남구").zipcode("56번지").build();
 
         memberRepository.save(Member.builder().name(name).password("xsd211de").email(email).address(address).build());
 

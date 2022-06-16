@@ -13,11 +13,14 @@ public class Address {
 
     private String city;
 
-    private String detail_addr;
+    private String street;
+
+    private String zipcode;
 
     @Builder
-    public Address(String city, String detail_addr){
+    public Address(String city, String street, String zipcode){
         this.city = city;
-        this.detail_addr = detail_addr;
+        this.street = street;
+        this.zipcode = zipcode;
     }
 }

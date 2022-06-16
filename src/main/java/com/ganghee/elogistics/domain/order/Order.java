@@ -23,6 +23,7 @@ public class Order extends BaseTimeEntity {
     @Column(name="order_id")
     private Long id;
 
+    //즉시 로딩은 예측이 어렵고, 어떤 SQL이 실행될지 추적하기 어렵워서 지연로딩으로 설정
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;

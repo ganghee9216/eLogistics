@@ -42,8 +42,8 @@ public class OrderServiceTest {
     public void registerItem(){
 
         Member member = Member.builder().name("kim").email("example@naver.com")
-                .password("123").address(new Address("서울", "강남"))
-                .role(Role.PRODUCER).build();
+                .password("123").address(new Address("서울", "강남", "56번지"))
+                .role(Role.PROVIDER).build();
 
         member = memberRepository.findById(memberRepository.save(member).getId())
                 .orElseThrow(() -> new IllegalArgumentException());
