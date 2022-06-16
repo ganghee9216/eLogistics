@@ -38,11 +38,7 @@
 #### 공급업체
 ![image](https://user-images.githubusercontent.com/105147525/173352720-24f7d63e-c2c9-4755-9267-f7bcde4471a4.png)
 
-#### 소매업체
+#### 소매업체, 물류업체
 
 ![image](https://user-images.githubusercontent.com/105147525/173355768-90906779-1c1d-4e07-8f9f-f1c16e4e45e4.png)
-
-#### 물류업체
-
-![image](https://user-images.githubusercontent.com/105147525/173823503-e2c39b0e-e198-47f8-baf6-16a6f5b1ca9d.png)
 
