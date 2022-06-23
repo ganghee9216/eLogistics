@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-
 public class Member {
 
     @Id
@@ -27,6 +26,8 @@ public class Member {
     @Column(nullable = false)
     private String email;
 
+    private String picture;
+
     @Embedded
     private Address address;
 
@@ -34,11 +35,22 @@ public class Member {
     private Role role;
 
     @Builder
-    public Member(String name, String password, String email, Address address, Role role){
+    public Member(String name, String password, String email, String picture, Address address, Role role){
         this.name = name;
         this.email = email;
+        this.picture = picture;
         this.password = password;
         this.address = address;
         this.role = role;
+    }
+    public Member update(String name, String picture){
+        this.name = name;
+        this.picture = picture;
+
+        return this;
+    }
+
+    public String getRoleKey(){
+        return this.role.getKey();
     }
 }

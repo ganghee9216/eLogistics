@@ -1,5 +1,6 @@
 package com.ganghee.elogistics.service.order;
 
+import com.ganghee.elogistics.domain.delivery.Delivery;
 import com.ganghee.elogistics.domain.item.Item;
 import com.ganghee.elogistics.domain.item.ItemRepository;
 import com.ganghee.elogistics.domain.member.Member;
@@ -40,6 +41,10 @@ public class OrderServiceImpl implements OrderService {
             Order order = Order.builder().member(member).orderItems(
                     makeOrderItems(member, sDto)).build();
 
+            Delivery.builder().order(order)
+                            .address(sDto.getAddress())
+                                    .build();
+
             orderRepository.save(order);
         }
     }
@@ -77,6 +82,7 @@ public class OrderServiceImpl implements OrderService {
         order.cancel();
         orderRepository.delete(order);
     }
+
 
     @Transactional
     public List<OrderItem> makeOrderItems(Member member, OrderSaveDto sDto){
