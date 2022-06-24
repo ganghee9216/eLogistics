@@ -1,3 +1,10 @@
+//querydsl
+buildscript {
+    dependencies{
+        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.7.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -8,6 +15,9 @@ plugins {
 group = 'com.ganghee'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+//querydsl
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 configurations {
     compileOnly {
@@ -22,12 +32,28 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    //롬복 설정
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    //jpa설정
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+    //h2-db
     implementation 'com.h2database:h2'
+
+    //jsp설정
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    implementation 'javax.servlet:jstl'
+
+    //querydsl
+    testImplementation("org.junit.vintage:junit-vintage-engine"){
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
+    implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-apt'
+
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -35,4 +61,28 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+//querydsl
+def querydslDir = "src/main/generated"
+
+querydsl{
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+sourceSets{
+    main{
+        java{
+            srcDirs = ['src/main/java', querydslDir]
+        }
+    }
+}
+
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
 }
