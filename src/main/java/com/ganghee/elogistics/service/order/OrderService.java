@@ -8,7 +8,7 @@ import java.util.List;
 public interface OrderService {
     void createOrder(List<OrderSaveDto> saveDto);
 
-    List<OrderResponseDto> orderList();
+    List<OrderResponseDto> orderList(Long memberId);
 
     void updateOrder(Long orderId, List<OrderSaveDto> saveDto);
 
