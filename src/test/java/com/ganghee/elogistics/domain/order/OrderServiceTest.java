@@ -1,13 +1,18 @@
 package com.ganghee.elogistics.domain.order;
 
 import com.ganghee.elogistics.domain.address.Address;
+import com.ganghee.elogistics.domain.delivery.Delivery;
+import com.ganghee.elogistics.domain.delivery.DeliveryQueryRepository;
+import com.ganghee.elogistics.domain.delivery.DeliveryRepository;
 import com.ganghee.elogistics.domain.item.Item;
 import com.ganghee.elogistics.domain.item.ItemRepository;
 import com.ganghee.elogistics.domain.member.Member;
 import com.ganghee.elogistics.domain.member.MemberRepository;
 import com.ganghee.elogistics.domain.member.Role;
+import com.ganghee.elogistics.dto.delivery.DeliveryResponseDto;
 import com.ganghee.elogistics.dto.order.OrderResponseDto;
 import com.ganghee.elogistics.dto.order.OrderSaveDto;
+import com.ganghee.elogistics.service.delivery.DeliveryService;
 import com.ganghee.elogistics.service.order.OrderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,11 +42,20 @@ public class OrderServiceTest {
     @Autowired
     OrderRepository orderRepository;
 
+    @Autowired
+    DeliveryRepository deliveryRepository;
+
     @Autowired(required = false)
     OrderQueryRepository orderQueryRepository;
 
     @Autowired
     OrderServiceImpl orderService;
+
+    @Autowired
+    DeliveryService deliveryService;
+
+    @Autowired(required = false)
+    DeliveryQueryRepository deliveryQueryRepository;
 
     @Test
     @Transactional
@@ -86,12 +100,21 @@ public class OrderServiceTest {
 
         orderService.createOrder(orderDtoList);
 
+        //querydsl 테스트
         List<Order> order = orderQueryRepository.findAllOrdersDesc(member.getId());
 
+        assertThat(order.get(0).getOrderItems().get(0).getItem().getName()).isEqualTo(itemNames[0]);
+        //주문리스트 조회 리팩토링 테스트
         List<OrderResponseDto> orderList = orderService.orderList(member.getId());
 
-        assertThat(order.get(0).getOrderItems().get(0).getItem().getName()).isEqualTo(itemNames[0]);
-
         assertThat(orderList.get(0).getItemName().get(0)).isEqualTo(itemNames[0]);
+
+        //delivery 생성 테스트
+        List<Delivery> delivery = deliveryRepository.findAll();
+
+        //배송리스트 조회 테스트
+        List<DeliveryResponseDto> deliveryList = deliveryService.deliveryList(member.getId());
+
+        assertThat(delivery.get(0).getOrder().getOrderItems().get(0).getItem().getName()).isEqualTo(itemNames[0]);
     }
 }

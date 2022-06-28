@@ -1,11 +1,13 @@
 package com.ganghee.elogistics.service.order;
 
 import com.ganghee.elogistics.domain.delivery.Delivery;
+import com.ganghee.elogistics.domain.delivery.DeliveryRepository;
 import com.ganghee.elogistics.domain.item.Item;
 import com.ganghee.elogistics.domain.item.ItemRepository;
 import com.ganghee.elogistics.domain.member.Member;
 import com.ganghee.elogistics.domain.member.MemberRepository;
 import com.ganghee.elogistics.domain.order.Order;
+import com.ganghee.elogistics.domain.order.OrderQueryRepository;
 import com.ganghee.elogistics.domain.order.OrderRepository;
 import com.ganghee.elogistics.domain.orderItem.OrderItem;
 import com.ganghee.elogistics.dto.order.OrderResponseDto;
@@ -25,9 +27,13 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
+    private final OrderQueryRepository orderQueryRepository;
+
     private final MemberRepository memberRepository;
 
     private final ItemRepository itemRepository;
+
+    private final DeliveryRepository deliveryRepository;
 
     @Override
     @Transactional
@@ -41,9 +47,10 @@ public class OrderServiceImpl implements OrderService {
             Order order = Order.builder().member(member).orderItems(
                     makeOrderItems(member, sDto)).build();
 
-            Delivery.builder().order(order)
-                            .address(sDto.getAddress())
-                                    .build();
+            deliveryRepository.save(Delivery.builder()
+                    .order(order)
+                    .address(member.getAddress())
+                    .build());
 
             orderRepository.save(order);
         }
@@ -68,8 +75,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public List<OrderResponseDto> orderList(){
-        return orderRepository.findAllOrderDesc().stream()
+    public List<OrderResponseDto> orderList(Long memberId){
+        return orderQueryRepository.findAllOrdersDesc(memberId).stream()
                 .map(OrderResponseDto::new)
                 .collect(Collectors.toList());
     }

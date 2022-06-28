@@ -30,7 +30,11 @@ public class Delivery extends BaseTimeEntity {
 
     @Builder
     public Delivery(Order order, Address address){
-        this.order = order;
+        if(order != null){
+            this.order = order;
+            order.changeDelivery(this);
+        }
         this.address = address;
+        this.status = DeliveryStatus.BEFORE_DELIVER;
     }
 }
