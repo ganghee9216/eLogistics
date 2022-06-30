@@ -4,8 +4,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect
+        show_sql: true
+        format_sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     generate-ddl: true
   datasource:
     hikari:
@@ -15,3 +17,11 @@ spring:
       enabled: true
   session:
     store-type: jdbc
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  profiles:
+    include: oauth
+server:
+  port: 8080
