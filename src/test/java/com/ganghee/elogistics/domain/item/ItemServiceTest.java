@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -31,8 +29,8 @@ public class ItemServiceTest {
     @BeforeEach
     public void createProd(){
         Member member = Member.builder().name("kim")
-                .email("example@naver.com").password("password")
-                .address(new Address()).role(Role.PRODUCER).build();
+                .email("example@naver.com")
+                .address(new Address()).role(Role.PROVIDER).build();
 
         memberRepository.save(member);
     }
@@ -41,9 +39,10 @@ public class ItemServiceTest {
     public void registerItemTest(){
         String name = "갤럭시";
         int price = 1000000;
+        String category = "스마트폰";
 
         ItemSaveDto saveDto = ItemSaveDto.builder().name(name)
-                .price(price).quantity(50).categories(new ArrayList<>())
+                .price(price).quantity(50).category(category)
                 .build();
 
         ItemResponseDto responseDto = itemService.registerItem(saveDto, 1L);

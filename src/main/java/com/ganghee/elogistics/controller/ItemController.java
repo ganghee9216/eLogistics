@@ -1,5 +1,7 @@
 package com.ganghee.elogistics.controller;
 
+import com.ganghee.elogistics.config.auth.LoginMember;
+import com.ganghee.elogistics.config.auth.dto.SessionMember;
 import com.ganghee.elogistics.dto.item.ItemListResponseDto;
 import com.ganghee.elogistics.dto.item.ItemResponseDto;
 import com.ganghee.elogistics.dto.item.ItemSaveDto;
@@ -7,33 +9,29 @@ import com.ganghee.elogistics.service.item.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/item")
+@RequestMapping("api/item")
 public class ItemController {
 
     private final ItemService itemService;
 
-    @PostMapping("/register")
-    public ItemResponseDto registerItem(@RequestBody ItemSaveDto saveDto, HttpSession session){
-        Long memberId = Long.parseLong(session.getId());
-        return itemService.registerItem(saveDto, memberId);
+    @PostMapping("/save")
+    public ItemResponseDto registerItem(@RequestBody ItemSaveDto saveDto, @LoginMember SessionMember member){
+        return itemService.registerItem(saveDto, member.getId());
     }
     @PutMapping("/{id}")
-    public void updateItem(@PathVariable Long id, HttpSession session, @RequestBody ItemSaveDto saveDto){
-        Long memberId = Long.parseLong(session.getId());
-        itemService.updateItem(id, memberId, saveDto);
+    public void updateItem(@PathVariable Long id, @LoginMember SessionMember member, @RequestBody ItemSaveDto saveDto){
+        itemService.updateItem(id, member.getId(), saveDto);
     }
     @DeleteMapping("/{id}")
-    public void cancelOrder(@PathVariable Long id, HttpSession session){
-        Long memberId = Long.parseLong(session.getId());
-        itemService.deleteItem(id, memberId);
+    public void deleteItem(@PathVariable Long id, @LoginMember SessionMember member){
+        itemService.deleteItem(id, member.getId());
     }
     @GetMapping
-    public List<ItemListResponseDto> orderList(){
+    public List<ItemListResponseDto> itemList(){
         return itemService.itemList();
     }
 }

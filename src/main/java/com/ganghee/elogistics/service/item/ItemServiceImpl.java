@@ -1,6 +1,7 @@
 package com.ganghee.elogistics.service.item;
 
-import com.ganghee.elogistics.domain.categoryItem.CategoryItem;
+import com.ganghee.elogistics.domain.category.Category;
+import com.ganghee.elogistics.domain.category.CategoryRepository;
 import com.ganghee.elogistics.domain.item.Item;
 import com.ganghee.elogistics.domain.item.ItemRepository;
 import com.ganghee.elogistics.domain.member.Member;
@@ -24,6 +25,8 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
 
+    private final CategoryRepository categoryRepository;
+
     @Override
     @Transactional
     public ItemResponseDto registerItem(ItemSaveDto itemDto, Long memberId){
@@ -31,20 +34,19 @@ public class ItemServiceImpl implements ItemService {
         Member producer = memberRepository.findById(memberId)
                 .orElseThrow(()->new IllegalArgumentException());
 
-        if(!producer.getRole().equals(Role.PRODUCER)){
+        if(!producer.getRole().equals(Role.PROVIDER)){
             throw new IllegalArgumentException("생산자가 아니라 등록할 수 없습니다.");
         }
 
         Item item = Item.builder().name(itemDto.getName())
                 .price(itemDto.getPrice())
                 .quantity(itemDto.getQuantity())
-                .producer(producer)
+                .provider(producer)
                 .build();
 
-        //itemDto.getCategories()값이 null일 때 까지 CategoryItem category에 값을 넣어줌
-        for(CategoryItem category : itemDto.getCategories()){
-            item.getCategories().add(category);
-        }
+        Category category = Category.builder().name(itemDto.getCategory()).build();
+
+        categoryRepository.save(category);
 
         Long savedId = itemRepository.save(item).getId();
 
@@ -77,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이템이 없습니다. id="+itemId));
 
-        if (!item.getProducer().getId().equals(memberId)) {
+        if (!item.getProvider().getId().equals(memberId)) {
             throw new IllegalArgumentException("생산자가 아니라 수정할 수 없습니다.");
         }
 
@@ -90,10 +92,11 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이템이 없습니다. id="+itemId));
 
-        if (!item.getProducer().getId().equals(memberId)) {
+        if (!item.getProvider().getId().equals(memberId)) {
             throw new IllegalArgumentException("생산자가 아니라 삭제할 수 없습니다.");
         }
 
         itemRepository.delete(item);
     }
+
 }

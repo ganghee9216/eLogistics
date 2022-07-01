@@ -30,17 +30,18 @@ public class Item {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member producer;
+    private Member provider;
 
     @OneToMany(mappedBy = "item")
     private List<CategoryItem> categories = new ArrayList<>();
 
     @Builder
-    public Item(String name, int price, int quantity, Member producer){
+    public Item(String name, int price, int quantity, Member provider, List<CategoryItem> categories){
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.producer = producer;
+        this.provider = provider;
+        this.categories = categories;
     }
 
     public void updateItem(String name, int price, int Quantity) {

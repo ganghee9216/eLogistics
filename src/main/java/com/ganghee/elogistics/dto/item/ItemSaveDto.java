@@ -1,10 +1,7 @@
 package com.ganghee.elogistics.dto.item;
 
-import com.ganghee.elogistics.domain.categoryItem.CategoryItem;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.List;
 
 @Getter
 public class ItemSaveDto {
@@ -15,13 +12,13 @@ public class ItemSaveDto {
 
     private int quantity;
 
-    private List<CategoryItem> categories;
+    private String category;
 
     @Builder
-    public ItemSaveDto(String name, int price, int quantity, List<CategoryItem> categories){
+    public ItemSaveDto(String name, int price, int quantity, String category){
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.categories = categories;
+        this.category = category;
     }
 }

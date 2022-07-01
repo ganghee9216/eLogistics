@@ -26,7 +26,7 @@ public class ItemListResponseDto {
         this.name = entity.getName();
         this.price = entity.getPrice();
         this.quantity = entity.getQuantity();
-        this.producer = entity.getProducer();
+        this.producer = entity.getProvider();
         this.categories = entity.getCategories();
     }
 }
