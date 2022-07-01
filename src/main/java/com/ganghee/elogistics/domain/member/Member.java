@@ -21,9 +21,6 @@ public class Member {
     private String name;
 
     @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
     private String email;
 
     private String picture;
@@ -35,11 +32,10 @@ public class Member {
     private Role role;
 
     @Builder
-    public Member(String name, String password, String email, String picture, Address address, Role role){
+    public Member(String name, String email, String picture, Address address, Role role){
         this.name = name;
         this.email = email;
         this.picture = picture;
-        this.password = password;
         this.address = address;
         this.role = role;
     }

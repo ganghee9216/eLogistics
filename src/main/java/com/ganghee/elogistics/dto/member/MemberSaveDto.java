@@ -29,7 +29,7 @@ public class MemberSaveDto {
     }
 
     public Member toEntity(){
-        return Member.builder().name(this.name).password(this.password)
-                .email(this.email).address(this.address).role(role).build();
+        return Member.builder().name(this.name).email(this.email)
+                .address(this.address).role(role).build();
     }
 }

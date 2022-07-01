@@ -30,7 +30,7 @@ public class MemberRepositoryTest {
         String email = "example@naver.com";
         Address address = Address.builder().city("서울").street("강남구").zipcode("56번지").build();
 
-        memberRepository.save(Member.builder().name(name).password("xsd211de").email(email).address(address).build());
+        memberRepository.save(Member.builder().name(name).email(email).address(address).build());
 
         List<Member> memberList = memberRepository.findAll();
 
