@@ -21,6 +21,7 @@
                         </c:when>
                         <c:when test="${member.role eq 'PROVIDER'}">
                             <a href="/item/save" role="button" class="btn btn-primary">상품 등록</a>
+                            <a href="/item/list" role="button" class="btn btn-primary">등록된 상품 조회</a>
                         </c:when>
                     </c:choose>
                 </c:otherwise>

@@ -2,8 +2,10 @@ package com.ganghee.elogistics.dto.item;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ItemSaveDto {
 
     private String name;

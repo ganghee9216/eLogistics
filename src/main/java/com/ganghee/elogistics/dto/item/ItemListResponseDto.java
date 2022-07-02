@@ -1,11 +1,7 @@
 package com.ganghee.elogistics.dto.item;
 
-import com.ganghee.elogistics.domain.categoryItem.CategoryItem;
 import com.ganghee.elogistics.domain.item.Item;
-import com.ganghee.elogistics.domain.member.Member;
 import lombok.Getter;
-
-import java.util.List;
 
 @Getter
 public class ItemListResponseDto {
@@ -18,15 +14,16 @@ public class ItemListResponseDto {
 
     private int quantity;
 
-    private Member producer;
+    private String provider;
 
-    private List<CategoryItem> categories;
+    private String categoryName;
 
     public ItemListResponseDto(Item entity){
+        this.id = entity.getId();
         this.name = entity.getName();
         this.price = entity.getPrice();
         this.quantity = entity.getQuantity();
-        this.producer = entity.getProvider();
-        this.categories = entity.getCategories();
+        this.provider = entity.getProvider().getName();
+        this.categoryName = entity.getCategory().getName();
     }
 }

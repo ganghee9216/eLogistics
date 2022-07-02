@@ -2,18 +2,15 @@ package com.ganghee.elogistics.controller;
 
 import com.ganghee.elogistics.config.auth.LoginMember;
 import com.ganghee.elogistics.config.auth.dto.SessionMember;
-import com.ganghee.elogistics.dto.item.ItemListResponseDto;
 import com.ganghee.elogistics.dto.item.ItemResponseDto;
 import com.ganghee.elogistics.dto.item.ItemSaveDto;
 import com.ganghee.elogistics.service.item.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/item")
+@RequestMapping("/api/item")
 public class ItemController {
 
     private final ItemService itemService;
@@ -30,8 +27,5 @@ public class ItemController {
     public void deleteItem(@PathVariable Long id, @LoginMember SessionMember member){
         itemService.deleteItem(id, member.getId());
     }
-    @GetMapping
-    public List<ItemListResponseDto> itemList(){
-        return itemService.itemList();
-    }
+
 }
