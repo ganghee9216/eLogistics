@@ -1,14 +1,12 @@
 package com.ganghee.elogistics.domain.item;
 
-import com.ganghee.elogistics.domain.categoryItem.CategoryItem;
+import com.ganghee.elogistics.domain.category.Category;
 import com.ganghee.elogistics.domain.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -28,20 +26,21 @@ public class Item {
 
     private int quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member provider;
 
-    @OneToMany(mappedBy = "item")
-    private List<CategoryItem> categories = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="category_id")
+    private Category category;
 
     @Builder
-    public Item(String name, int price, int quantity, Member provider, List<CategoryItem> categories){
+    public Item(String name, int price, int quantity, Member provider, Category category){
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.provider = provider;
-        this.categories = categories;
+        this.category = category;
     }
 
     public void updateItem(String name, int price, int Quantity) {
