@@ -13,7 +13,7 @@ public interface ItemService {
     ItemResponseDto findItem(Long itemId);
 
     //아이템을 조회하여 카테고리까지 확인
-    List<ItemListResponseDto> itemList();
+    List<ItemListResponseDto> itemList(Long memberId);
 
     void updateItem(Long itemId, Long memberId, ItemSaveDto saveDto);
 

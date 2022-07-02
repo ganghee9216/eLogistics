@@ -3,6 +3,7 @@ package com.ganghee.elogistics.service.item;
 import com.ganghee.elogistics.domain.category.Category;
 import com.ganghee.elogistics.domain.category.CategoryRepository;
 import com.ganghee.elogistics.domain.item.Item;
+import com.ganghee.elogistics.domain.item.ItemQueryRepository;
 import com.ganghee.elogistics.domain.item.ItemRepository;
 import com.ganghee.elogistics.domain.member.Member;
 import com.ganghee.elogistics.domain.member.MemberRepository;
@@ -25,6 +26,8 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
 
+    private final ItemQueryRepository itemQueryRepository;
+
     private final CategoryRepository categoryRepository;
 
     @Override
@@ -38,15 +41,16 @@ public class ItemServiceImpl implements ItemService {
             throw new IllegalArgumentException("생산자가 아니라 등록할 수 없습니다.");
         }
 
+        Category category = Category.builder().name(itemDto.getName()).build();
+
+        categoryRepository.save(category);
+
         Item item = Item.builder().name(itemDto.getName())
                 .price(itemDto.getPrice())
                 .quantity(itemDto.getQuantity())
+                .category(category)
                 .provider(producer)
                 .build();
-
-        Category category = Category.builder().name(itemDto.getCategory()).build();
-
-        categoryRepository.save(category);
 
         Long savedId = itemRepository.save(item).getId();
 
@@ -67,8 +71,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ItemListResponseDto> itemList(){
-        return itemRepository.findAllItemDesc().stream()
+    public List<ItemListResponseDto> itemList(Long itemId){
+        return itemQueryRepository.findAllStockDesc(itemId).stream()
                 .map(ItemListResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -98,5 +102,4 @@ public class ItemServiceImpl implements ItemService {
 
         itemRepository.delete(item);
     }
-
 }
