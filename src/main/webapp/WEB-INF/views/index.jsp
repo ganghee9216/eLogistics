@@ -17,7 +17,7 @@
                     <a href="/logout" class="btn btn-info active" role="button">Logout</a>
                     <c:choose>
                         <c:when test="${member.role eq 'RETAIL'}">
-                            <a href="/orders/save" role="button" class="btn btn-primary">주문하기</a>
+                            <a href="/order/save" role="button" class="btn btn-primary">주문하기</a>
                         </c:when>
                         <c:when test="${member.role eq 'PROVIDER'}">
                             <a href="/item/save" role="button" class="btn btn-primary">상품 등록</a>
