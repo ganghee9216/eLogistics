@@ -40,5 +40,5 @@
 
 #### 소매업체, 물류업체
 
-![image](https://user-images.githubusercontent.com/105147525/173355768-90906779-1c1d-4e07-8f9f-f1c16e4e45e4.png)
+![image](https://user-images.githubusercontent.com/105147525/177079466-d169fb47-da14-4942-b919-5ba387b6114c.png)
 
