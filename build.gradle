@@ -39,8 +39,10 @@ dependencies {
     //jpa설정
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    //h2-db
-    implementation 'com.h2database:h2'
+    //mysql
+    implementation 'mysql:mysql-connector-java:8.0.29'
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     //jsp설정
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'

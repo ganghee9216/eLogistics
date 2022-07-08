@@ -9,19 +9,20 @@ spring:
     hibernate:
       ddl-auto: create
     generate-ddl: true
-  datasource:
-    hikari:
-      jdbc-url: jdbc:h2:mem://localhost/~/testdb;MODE=MYSQL
-  h2:
-    console:
-      enabled: true
-  session:
-    store-type: jdbc
   mvc:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
   profiles:
     include: oauth
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/gang?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: rhdwk9216
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
 server:
   port: 8080
