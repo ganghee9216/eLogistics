@@ -24,8 +24,8 @@
     <c:forEach var="item" items="${item}">
         <tr>
             <!--List에서 뽑아낸 객체의 필드 사용-->
-            <td><a href="/orders/update/${item.id}">${item.id}</a></td>
-            <td>${item.name}</td>
+            <td>${item.id}</td>
+            <td><a href="/item/update/${item.id}">${item.name}</a></td>
             <td>${item.price}</td>
             <td>${item.quantity}</td>
             <td>${item.provider}</td>

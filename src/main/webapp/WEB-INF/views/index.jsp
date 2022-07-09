@@ -6,7 +6,6 @@
 <h1>e-Logistics</h1>
 <div class="col-md-12">
     <div class="row">
-        <div class="col-md-6">
             <c:choose>
                 <c:when test="${empty member}">
                     <!--스프링 시큐리티에서 기본적으로 제공하는 로그인 URL-->
@@ -26,7 +25,7 @@
                     </c:choose>
                 </c:otherwise>
             </c:choose>
-        </div>
+
     </div>
     <br>
     <!-- 목록 출력 영역 -->
