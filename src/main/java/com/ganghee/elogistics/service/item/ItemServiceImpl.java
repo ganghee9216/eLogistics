@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public ItemResponseDto registerItem(ItemSaveDto itemDto, Long memberId){
+    public Long registerItem(ItemSaveDto itemDto, Long memberId){
 
         Member producer = memberRepository.findById(memberId)
                 .orElseThrow(()->new IllegalArgumentException());
@@ -41,7 +42,7 @@ public class ItemServiceImpl implements ItemService {
             throw new IllegalArgumentException("생산자가 아니라 등록할 수 없습니다.");
         }
 
-        Category category = Category.builder().name(itemDto.getName()).build();
+        Category category = Category.builder().name(itemDto.getCategory()).build();
 
         categoryRepository.save(category);
 
@@ -52,12 +53,19 @@ public class ItemServiceImpl implements ItemService {
                 .provider(producer)
                 .build();
 
-        Long savedId = itemRepository.save(item).getId();
+        Optional<Item> exist = itemRepository.findByName(itemDto.getName());
 
-        Item savedItem = itemRepository.findById(savedId).orElseThrow(
-                () -> new IllegalArgumentException());
+        Long savedId;
 
-        return new ItemResponseDto(savedItem);
+        if(exist.isPresent()) {
+            savedId = itemRepository.findByName(itemDto.getName()).get().getId();
+
+        }
+        else{
+            savedId = itemRepository.save(item).getId();
+        }
+
+        return savedId;
     }
     @Override
     @Transactional

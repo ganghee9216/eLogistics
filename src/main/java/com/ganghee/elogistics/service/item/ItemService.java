@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ItemService {
 
-    ItemResponseDto registerItem(ItemSaveDto itemDto, Long memberId);
+    Long registerItem(ItemSaveDto itemDto, Long memberId);
 
     ItemResponseDto findItem(Long itemId);
 

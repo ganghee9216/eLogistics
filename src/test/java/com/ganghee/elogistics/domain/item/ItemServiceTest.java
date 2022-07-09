@@ -4,7 +4,6 @@ import com.ganghee.elogistics.domain.address.Address;
 import com.ganghee.elogistics.domain.member.Member;
 import com.ganghee.elogistics.domain.member.MemberRepository;
 import com.ganghee.elogistics.domain.member.Role;
-import com.ganghee.elogistics.dto.item.ItemResponseDto;
 import com.ganghee.elogistics.dto.item.ItemSaveDto;
 import com.ganghee.elogistics.service.item.ItemService;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +25,9 @@ public class ItemServiceTest {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    ItemRepository itemRepository;
+
     @BeforeEach
     public void createProd(){
         Member member = Member.builder().name("kim")
@@ -45,8 +47,8 @@ public class ItemServiceTest {
                 .price(price).quantity(50).category(category)
                 .build();
 
-        ItemResponseDto responseDto = itemService.registerItem(saveDto, 1L);
+        Long itemId = itemService.registerItem(saveDto, 1L);
 
-        assertThat(responseDto.getName()).isEqualTo(name);
+        assertThat(itemRepository.findById(itemId).get().getName()).isEqualTo(name);
     }
 }

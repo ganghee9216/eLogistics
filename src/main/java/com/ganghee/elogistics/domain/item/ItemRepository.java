@@ -2,6 +2,8 @@ package com.ganghee.elogistics.domain.item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ItemRepository extends JpaRepository<Item, Long> {
+import java.util.Optional;
 
+public interface ItemRepository extends JpaRepository<Item, Long> {
+    Optional<Item> findByName(String name);
 }
