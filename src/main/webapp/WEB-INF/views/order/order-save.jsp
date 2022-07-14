@@ -15,18 +15,19 @@
             <div class="form-group">
                 <label for="category">카테고리</label>
                 <select id="category">
-                    <option value="category1">카테고리1</option>
-                    <option value="category2">카테고리2</option>
-                    <option value="category3">카테고리3</option>
+                    <option value="null selected">선택</option>
+                    <c:forEach var="category" items="${category}">
+                        <option value="${category.categoryName}">${category.categoryName}</option>
+                    </c:forEach>
                 </select>
             </div>
-            <div class="form-group">
-                <fieldset>
+            <div class="form-group" id="check-items">
+                <fieldset id="itemList">
                     <legend>상품 목록</legend>
-                    <input type="checkbox" name="itemList" id="item1">
-                    <label for="item1">상품1</label>
-                    <input type="checkbox" name="itemList" id="item2">
-                    <label for="item1">상품2</label>
+                    <c:forEach var="itemName" items="${itemName}">
+                        <input type="checkbox" name="item" id="${itemName}">
+                        <label for="${itemName}">${itemName}</label>
+                    </c:forEach>
                 </fieldset>
             </div>
             <div class="form-group">
@@ -45,4 +46,5 @@
         <button type="button" class="btn btn-primary" id="btn-order-save">등록</button>
     </div>
 </div>
+<script type="text/javascript" src="/js/item.js"></script>
 <%@ include file="../layout/footer.jsp" %>

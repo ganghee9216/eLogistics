@@ -8,6 +8,7 @@ import com.ganghee.elogistics.domain.item.ItemRepository;
 import com.ganghee.elogistics.domain.member.Member;
 import com.ganghee.elogistics.domain.member.MemberRepository;
 import com.ganghee.elogistics.domain.member.Role;
+import com.ganghee.elogistics.dto.item.ItemInCategoryDto;
 import com.ganghee.elogistics.dto.item.ItemListResponseDto;
 import com.ganghee.elogistics.dto.item.ItemResponseDto;
 import com.ganghee.elogistics.dto.item.ItemSaveDto;
@@ -109,5 +110,12 @@ public class ItemServiceImpl implements ItemService {
         }
 
         itemRepository.delete(item);
+    }
+    @Override
+    @Transactional
+    public List<ItemInCategoryDto> findByCategory(String category){
+        return itemQueryRepository.findByCategory(category).stream()
+                .map(ItemInCategoryDto::new)
+                .collect(Collectors.toList());
     }
 }
